@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura Tech - Tienda Tecnológica</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
 </head>
 <body>
 
-    <!-- MENÚ DE NAVEGACIÓN -->
     <header>
         <div class="logo">Aura Tech</div>
         <nav>
@@ -17,88 +16,31 @@
             <a href="#software">Software</a>
             <a href="#computadoras">Computadoras</a>
             <a href="#ofertas">Ofertas</a>
-            <a href="#contacto">Contacto</a>
         </nav>
         <button class="btn-carrito" onclick="toggleCarrito()">🛒 Carrito (<span id="contador-carrito">0</span>)</button>
     </header>
 
-    <!-- SECCIÓN HERO (BIENVENIDA) -->
     <section id="inicio" class="hero-seccion">
         <div class="hero-contenido">
             <h1>"No vendemos tecnología, impulsamos tu futuro digital."</h1>
-            <p>Bienvenido a nuestra tienda tecnológica. Aquí encontrarás software, equipos de cómputo y herramientas digitales seleccionadas para mejorar tu productividad, rendimiento y experiencia tecnológica. Nuestro compromiso es ofrecer productos de calidad, precios competitivos y atención confiable.</p>
+            <p>Bienvenido a nuestra tienda tecnológica. Aquí encontrarás software, equipos de cómputo y herramientas digitales seleccionadas para mejorar tu productividad, rendimiento y experiencia tecnológica.</p>
             <a href="#productos" class="btn-cta">Ver Catálogo</a>
         </div>
     </section>
 
-    <!-- CONTENEDOR PRINCIPAL DE TIENDA -->
     <main id="productos" class="contenedor-tienda">
-        
-        <!-- CATEGORÍA: COMPUTADORAS -->
         <h2 class="titulo-categoria">Computadoras Destacadas</h2>
-        <div class="cuadrícula-productos" id="computadoras">
+        <div class="cuadrícula-productos">
             <div class="tarjeta-producto">
                 <div class="badge">Más Vendido</div>
                 <h3>Laptop Pro-Work 2026</h3>
-                <p class="descripcion">Procesador de última generación, 16GB RAM y 1TB SSD. Ideal para programación y multitarea.</p>
+                <p class="descripcion">Procesador de última generación, 16GB RAM y 1TB SSD. Ideal para programación.</p>
                 <p class="precio">$16,499.00</p>
                 <button onclick="agregarAlCarrito('Laptop Pro-Work 2026', 16499)">Agregar al Carrito</button>
             </div>
-            <div class="tarjeta-producto">
-                <h3>PC Desktop "Rendimiento Alfa"</h3>
-                <p class="descripcion">Optimizada para tareas pesadas, bases de datos y renderizado. Gráficos dedicados.</p>
-                <p class="precio">$22,999.00</p>
-                <button onclick="agregarAlCarrito('PC Desktop Alfa', 22999)">Agregar al Carrito</button>
-            </div>
         </div>
-
-        <!-- CATEGORÍA: SOFTWARE -->
-        <h2 class="titulo-categoria">Software y Licencias</h2>
-        <div class="cuadrícula-productos" id="software">
-            <div class="tarjeta-producto">
-                <h3>Licencia Windows 11 Pro</h3>
-                <p class="descripcion">Código digital legítimo. Máxima seguridad y herramientas avanzadas de desarrollo.</p>
-                <p class="precio">$799.00</p>
-                <button onclick="agregarAlCarrito('Licencia Windows 11 Pro', 799)">Agregar al Carrito</button>
-            </div>
-            <div class="tarjeta-producto">
-                <h3>Suite Productividad Office</h3>
-                <p class="descripcion">Suscripción anual para creación de reportes, hojas de cálculo y automatización en la nube.</p>
-                <p class="precio">$1,299.00</p>
-                <button onclick="agregarAlCarrito('Suite Office Anual', 1299)">Agregar al Carrito</button>
-            </div>
-        </div>
-
-        <!-- CATEGORÍA: OFERTAS -->
-        <h2 class="titulo-categoria">Ofertas Especiales</h2>
-        <div class="cuadrícula-productos" id="ofertas">
-            <div class="tarjeta-producto oferta">
-                <div class="badge-oferta">🔥 Solo quedan 3 unidades</div>
-                <h3>SSD Portable NVMe 2TB</h3>
-                <p class="descripcion">Almacenamiento externo ultra rápido. Transfiere archivos pesados en segundos.</p>
-                <p class="precio"><span class="antes">$2,700.00</span> $2,100.00</p>
-                <button onclick="agregarAlCarrito('SSD Portable NVMe 2TB', 2100)">Agregar al Carrito</button>
-            </div>
-        </div>
-
     </main>
 
-    <!-- SECCIÓN DE OPINIONES -->
-    <section class="opiniones-seccion">
-        <h2>Opiniones de Clientes</h2>
-        <div class="opiniones-contenedor">
-            <blockquote class="opinion">
-                <p>"Compré la PC de escritorio para mis proyectos de programación y bases de datos. El rendimiento es increíble."</p>
-                <cite>- Carlos M. (Desarrollador Web)</cite>
-            </blockquote>
-            <blockquote class="opinion">
-                <p>"La licencia de software me llegó de inmediato a mi correo. Súper confiables y a un precio genial."</p>
-                <cite>- Elena R. (Estudiante Técnica)</cite>
-            </blockquote>
-        </div>
-    </section>
-
-    <!-- BARRA LATERAL DEL CARRITO (DESPLEGABLE) -->
     <aside id="carrito-lateral" class="carrito-panel">
         <h2>Tu Carrito</h2>
         <ul id="lista-carrito"></ul>
@@ -109,10 +51,39 @@
         <button class="btn-cerrar" onclick="toggleCarrito()">Cerrar</button>
     </aside>
 
-    <footer id="contacto">
-        <p>© 2026 Aura Tech. Todos los derechos reservados.</p>
-    </footer>
+    <script>
+        let carrito = [];
+        let total = 0;
 
-    <script src="script.js"></script>
+        function toggleCarrito() {
+            document.getElementById('carrito-lateral').classList.toggle('abierto');
+        }
+
+        function agregarAlCarrito(nombre, precio) {
+            carrito.push({ nombre, precio });
+            total += precio;
+            actualizarInterfaz();
+        }
+
+        function actualizarInterfaz() {
+            const lista = document.getElementById('lista-carrito');
+            const totalTxt = document.getElementById('total-precio');
+            const contador = document.getElementById('contador-carrito');
+            
+            lista.innerHTML = '';
+            carrito.forEach(item => {
+                let li = document.createElement('li');
+                li.textContent = `${item.nombre} - $${item.precio.toLocaleString('es-MX')}`;
+                lista.appendChild(li);
+            });
+            totalTxt.textContent = total.toLocaleString('es-MX');
+            contador.textContent = carrito.length;
+        }
+
+        function enviarPedidoTelegram() {
+            if (carrito.length === 0) return alert("El carrito está vacío.");
+            alert(`¡Pedido confirmado! Total: $${total}. Conectando con el bot...`);
+        }
+    </script>
 </body>
 </html>
