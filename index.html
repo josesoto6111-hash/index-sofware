@@ -3,44 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Tienda en Línea</title>
+    <title>Aura Tech - Tienda Tecnológica</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
+    <!-- MENÚ DE NAVEGACIÓN -->
     <header>
-        <h1>Aura - Tienda Deportiva</h1>
+        <div class="logo">Aura Tech</div>
         <nav>
-            <a href="#">Inicio</a>
-            <a href="#">Catálogo</a>
-            <a href="#">Contacto</a>
+            <a href="#inicio">Inicio</a>
+            <a href="#productos">Productos</a>
+            <a href="#software">Software</a>
+            <a href="#computadoras">Computadoras</a>
+            <a href="#ofertas">Ofertas</a>
+            <a href="#contacto">Contacto</a>
         </nav>
+        <button class="btn-carrito" onclick="toggleCarrito()">🛒 Carrito (<span id="contador-carrito">0</span>)</button>
     </header>
 
-    <main class="contenedor-productos">
-        <!-- Producto 1 -->
-        <div class="tarjeta-producto">
-            <img src="https://via.placeholder.com/150" alt="Producto">
-            <h3>Playera Deportiva</h3>
-            <p class="precio">$299.00</p>
-            <button onclick="agregarAlCarrito('Playera Deportiva', 299)">Agregar al Carrito</button>
+    <!-- SECCIÓN HERO (BIENVENIDA) -->
+    <section id="inicio" class="hero-seccion">
+        <div class="hero-contenido">
+            <h1>"No vendemos tecnología, impulsamos tu futuro digital."</h1>
+            <p>Bienvenido a nuestra tienda tecnológica. Aquí encontrarás software, equipos de cómputo y herramientas digitales seleccionadas para mejorar tu productividad, rendimiento y experiencia tecnológica. Nuestro compromiso es ofrecer productos de calidad, precios competitivos y atención confiable.</p>
+            <a href="#productos" class="btn-cta">Ver Catálogo</a>
+        </div>
+    </section>
+
+    <!-- CONTENEDOR PRINCIPAL DE TIENDA -->
+    <main id="productos" class="contenedor-tienda">
+        
+        <!-- CATEGORÍA: COMPUTADORAS -->
+        <h2 class="titulo-categoria">Computadoras Destacadas</h2>
+        <div class="cuadrícula-productos" id="computadoras">
+            <div class="tarjeta-producto">
+                <div class="badge">Más Vendido</div>
+                <h3>Laptop Pro-Work 2026</h3>
+                <p class="descripcion">Procesador de última generación, 16GB RAM y 1TB SSD. Ideal para programación y multitarea.</p>
+                <p class="precio">$16,499.00</p>
+                <button onclick="agregarAlCarrito('Laptop Pro-Work 2026', 16499)">Agregar al Carrito</button>
+            </div>
+            <div class="tarjeta-producto">
+                <h3>PC Desktop "Rendimiento Alfa"</h3>
+                <p class="descripcion">Optimizada para tareas pesadas, bases de datos y renderizado. Gráficos dedicados.</p>
+                <p class="precio">$22,999.00</p>
+                <button onclick="agregarAlCarrito('PC Desktop Alfa', 22999)">Agregar al Carrito</button>
+            </div>
         </div>
 
-        <!-- Producto 2 -->
-        <div class="tarjeta-producto">
-            <img src="https://via.placeholder.com/150" alt="Producto">
-            <h3>Tenis Running</h3>
-            <p class="precio">$1,299.00</p>
-            <button onclick="agregarAlCarrito('Tenis Running', 1299)">Agregar al Carrito</button>
+        <!-- CATEGORÍA: SOFTWARE -->
+        <h2 class="titulo-categoria">Software y Licencias</h2>
+        <div class="cuadrícula-productos" id="software">
+            <div class="tarjeta-producto">
+                <h3>Licencia Windows 11 Pro</h3>
+                <p class="descripcion">Código digital legítimo. Máxima seguridad y herramientas avanzadas de desarrollo.</p>
+                <p class="precio">$799.00</p>
+                <button onclick="agregarAlCarrito('Licencia Windows 11 Pro', 799)">Agregar al Carrito</button>
+            </div>
+            <div class="tarjeta-producto">
+                <h3>Suite Productividad Office</h3>
+                <p class="descripcion">Suscripción anual para creación de reportes, hojas de cálculo y automatización en la nube.</p>
+                <p class="precio">$1,299.00</p>
+                <button onclick="agregarAlCarrito('Suite Office Anual', 1299)">Agregar al Carrito</button>
+            </div>
         </div>
+
+        <!-- CATEGORÍA: OFERTAS -->
+        <h2 class="titulo-categoria">Ofertas Especiales</h2>
+        <div class="cuadrícula-productos" id="ofertas">
+            <div class="tarjeta-producto oferta">
+                <div class="badge-oferta">🔥 Solo quedan 3 unidades</div>
+                <h3>SSD Portable NVMe 2TB</h3>
+                <p class="descripcion">Almacenamiento externo ultra rápido. Transfiere archivos pesados en segundos.</p>
+                <p class="precio"><span class="antes">$2,700.00</span> $2,100.00</p>
+                <button onclick="agregarAlCarrito('SSD Portable NVMe 2TB', 2100)">Agregar al Carrito</button>
+            </div>
+        </div>
+
     </main>
 
-    <aside class="carrito-seccion">
+    <!-- SECCIÓN DE OPINIONES -->
+    <section class="opiniones-seccion">
+        <h2>Opiniones de Clientes</h2>
+        <div class="opiniones-contenedor">
+            <blockquote class="opinion">
+                <p>"Compré la PC de escritorio para mis proyectos de programación y bases de datos. El rendimiento es increíble."</p>
+                <cite>- Carlos M. (Desarrollador Web)</cite>
+            </blockquote>
+            <blockquote class="opinion">
+                <p>"La licencia de software me llegó de inmediato a mi correo. Súper confiables y a un precio genial."</p>
+                <cite>- Elena R. (Estudiante Técnica)</cite>
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- BARRA LATERAL DEL CARRITO (DESPLEGABLE) -->
+    <aside id="carrito-lateral" class="carrito-panel">
         <h2>Tu Carrito</h2>
         <ul id="lista-carrito"></ul>
-        <p>Total: $<span id="total-precio">0</span></p>
-        <button id="btn-comprar" onclick="enviarPedidoTelegram()">Confirmar Pedido</button>
+        <div class="carrito-total">
+            <p>Total: $<span id="total-precio">0</span></p>
+        </div>
+        <button class="btn-comprar" onclick="enviarPedidoTelegram()">Confirmar Pedido</button>
+        <button class="btn-cerrar" onclick="toggleCarrito()">Cerrar</button>
     </aside>
+
+    <footer id="contacto">
+        <p>© 2026 Aura Tech. Todos los derechos reservados.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
